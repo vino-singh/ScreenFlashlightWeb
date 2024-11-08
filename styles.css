@@ -5,10 +5,36 @@
     background-color: white; /* Default color */
 }
 
-/* Style for the color slider */
-.color-slider {
+/* Style for the color wheel container */
+.color-wheel-container {
     position: fixed;
     bottom: 20px;
-    width: 80%;
-    left: 10%;
+    right: 20px;
+    width: 60px;
+    height: 60px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: width 0.3s ease, height 0.3s ease;
+}
+
+/* Style for the color wheel */
+.color-wheel {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background-image: conic-gradient(
+        red, yellow, lime, cyan, blue, magenta, red
+    );
+    transform: scale(1);
+    transition: transform 0.3s ease;
+}
+
+/* Expanded color wheel */
+.color-wheel-container.expanded {
+    width: 200px;
+    height: 200px;
+}
+
+.color-wheel-container.expanded .color-wheel {
+    transform: scale(3);
 }
