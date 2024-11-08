@@ -22,19 +22,4 @@ function hueToRgb(hue) {
         case 1: return `rgb(${Math.round(q * 255)}, 255, 0)`;          // Yellow to Green
         case 2: return `rgb(0, 255, ${Math.round(t * 255)})`;          // Green to Cyan
         case 3: return `rgb(0, ${Math.round(q * 255)}, 255)`;          // Cyan to Blue
-        case 4: return `rgb(${Math.round(t * 255)}, 0, 255)`;          // Blue to Magenta
-        case 5: return `rgb(255, 0, ${Math.round(q * 255)})`;          // Magenta to Red
-        default: return "rgb(255, 255, 255)";                          // Fallback to white
-    }
-}
-
-// Update the screen color as the slider moves
-colorSlider.addEventListener("input", () => {
-    const hue = colorSlider.value;
-    screen.style.backgroundColor = hueToRgb(hue); // Convert hue to RGB
-});
-
-// Hide the slider when the user releases the slider and set the color
-colorSlider.addEventListener("change", () => {
-    colorSlider.style.display = 'none'; // Hide the slider
-});
+        case 4: return `rgb(${Math.round(t * 255)}, 0, 255)`
