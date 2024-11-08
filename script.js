@@ -10,10 +10,10 @@ colorWheelButton.addEventListener("click", () => {
 // Update the screen color as the slider moves
 colorSlider.addEventListener("input", () => {
     const hue = colorSlider.value;
-    screen.style.backgroundColor = `hsl(${hue}, 100%, 50%)`; // Hue changes, saturation and lightness are fixed
+    screen.style.backgroundColor = `hsl(${hue}, 100%, 50%)`; // Using HSL for reliable color changes
 });
 
 // Hide the slider when the user releases the slider and set the color
 colorSlider.addEventListener("change", () => {
-    colorSlider.style.display = 'none'; // Hide the slider
+    colorSlider.style.display = 'none'; // Hide the slider after selection
 });
