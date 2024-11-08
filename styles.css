@@ -14,6 +14,7 @@
     height: 60px;
     overflow: hidden;
     cursor: pointer;
+    border-radius: 50%; /* Keep the wheel circular */
     transition: width 0.3s ease, height 0.3s ease;
 }
 
@@ -29,12 +30,13 @@
     transition: transform 0.3s ease;
 }
 
-/* Expanded color wheel */
+/* Expanded color wheel - keeps it circular */
 .color-wheel-container.expanded {
     width: 200px;
     height: 200px;
+    border-radius: 50%; /* Maintain circular shape when expanded */
 }
 
 .color-wheel-container.expanded .color-wheel {
-    transform: scale(3);
+    transform: scale(1); /* No scaling needed */
 }
