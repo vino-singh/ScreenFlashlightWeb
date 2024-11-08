@@ -1,21 +1,40 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Screen Flashlight</title>
-    <link rel="stylesheet" href="styles.css">
-    <link rel="manifest" href="manifest.json">
-</head>
-<body>
-    <div id="flashlight" class="screen"></div>
-    
-    <!-- Color Wheel Button -->
-    <button id="colorWheelButton" class="color-wheel"></button>
-    
-    <!-- Color Slider -->
-    <input type="range" id="colorSlider" min="0" max="360" value="0" class="color-slider" />
+const screen = document.getElementById('flashlight');
+const colorWheelButton = document.getElementById('colorWheelButton');
+const colorSlider = document.getElementById('colorSlider');
 
-    <script src="script.js"></script>
-</body>
-</html>
+// Show the color slider when the color wheel button is clicked
+colorWheelButton.addEventListener("click", () => {
+    colorSlider.style.display = colorSlider.style.display === 'none' ? 'block' : 'none';
+});
+
+// Convert hue to RGB
+function hueToRgb(hue) {
+    const adjustedHue = hue % 360; // Keep within 0-360
+    const sector = Math.floor(adjustedHue / 60); // 60 degrees per color transition
+    const fraction = (adjustedHue / 60) - sector;
+
+    const p = 0;
+    const q = 1 - fraction;
+    const t = fraction;
+
+    switch (sector) {
+        case 0: return `rgb(255, ${t * 255}, 0)`;          // Red to Yellow
+        case 1: return `rgb(${q * 255}, 255, 0)`;          // Yellow to Green
+        case 2: return `rgb(0, 255, ${t * 255})`;          // Green to Cyan
+        case 3: return `rgb(0, ${q * 255}, 255)`;          // Cyan to Blue
+        case 4: return `rgb(${t * 255}, 0, 255)`;          // Blue to Magenta
+        case 5: return `rgb(255, 0, ${q * 255})`;          // Magenta to Red
+        default: return "rgb(255, 255, 255)";              // Fallback to white
+    }
+}
+
+// Update the screen color as the slider moves
+colorSlider.addEventListener("input", () => {
+    const hue = colorSlider.value;
+    screen.style.backgroundColor = hueToRgb(hue); // Convert hue to RGB
+});
+
+// Hide the slider when the user releases the slider and set the color
+colorSlider.addEventListener("change", () => {
+    colorSlider.style.display = 'none'; // Hide the slider
+});
