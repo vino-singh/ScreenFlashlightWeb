@@ -26,9 +26,9 @@ function updateColor(event) {
     const dx = clientX - centerX;
     const dy = clientY - centerY;
 
-    // Calculate angle in degrees, adjusting so 0 degrees points to the top of the wheel (red)
-    let angle = Math.atan2(dy, dx) * (180 / Math.PI);
-    angle = (angle + 90 + 360) % 360; // Adjust by +90 degrees and normalize to 0-360 range
+    // Calculate angle in degrees, adjusting so 0 degrees points to the top of the wheel
+    let angle = Math.atan2(dy, dx) * (180 / Math.PI); // Get angle in degrees
+    angle = (angle + 360 + 90) % 360; // Offset by +90 degrees to match red at the top
 
     // Map angle to hue for color change
     const hue = angle; // In HSL, hue directly correlates to degrees on the color wheel
