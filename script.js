@@ -2,53 +2,52 @@ const screen = document.getElementById('flashlight');
 const colorWheelContainer = document.getElementById('colorWheelContainer');
 const colorWheel = document.getElementById('colorWheel');
 
-// Expand the color wheel on touchstart (for mobile) or click (for desktop)
-colorWheelContainer.addEventListener("touchstart", (event) => {
-    event.preventDefault(); // Prevent any default touch actions
+// Function to expand the color wheel on touch or mouse interaction
+function expandColorWheel() {
     colorWheelContainer.classList.add("expanded");
-});
-
-colorWheelContainer.addEventListener("mousedown", () => {
-    colorWheelContainer.classList.add("expanded");
-});
-
-// Update the screen color based on the angle of thumb/mouse position on the color wheel
-function updateColor(event) {
-    // Get the touch point or mouse point
-    const rect = colorWheel.getBoundingClientRect();
-    const centerX = rect.left + rect.width / 2;
-    const centerY = rect.top + rect.height / 2;
-    let clientX, clientY;
-
-    if (event.touches && event.touches[0]) {
-        clientX = event.touches[0].clientX;
-        clientY = event.touches[0].clientY;
-    } else {
-        clientX = event.clientX;
-        clientY = event.clientY;
-    }
-
-    const dx = clientX - centerX;
-    const dy = clientY - centerY;
-
-    // Calculate the angle in degrees, adjusting to match the color wheel
-    let angle = Math.atan2(dy, dx) * (180 / Math.PI) + 90; // Offset by 90 degrees for alignment
-    if (angle < 0) angle += 360; // Normalize to 0-360
-
-    // Update the screen color based on the hue from the calculated angle
-    const hue = angle % 360; // Limit hue to 0-360 degrees
-    screen.style.backgroundColor = `hsl(${hue}, 100%, 50%)`;
 }
 
-// Handle touchmove and mousemove to update color as the thumb/finger moves around the wheel
-colorWheel.addEventListener("touchmove", updateColor);
-colorWheel.addEventListener("mousemove", updateColor);
-
-// Shrink the color wheel back on touchend or mouseup
-function resetWheel() {
+// Function to shrink the color wheel when interaction ends
+function shrinkColorWheel() {
     colorWheelContainer.classList.remove("expanded");
 }
 
-// Reset the wheel on touchend (for mobile) or mouseup (for desktop)
-colorWheelContainer.addEventListener("touchend", resetWheel);
-colorWheelContainer.addEventListener("mouseup", resetWheel);
+// Function to calculate color based on angle
+function updateColor(event) {
+    // Use touch position if available, else use mouse position
+    const isTouchEvent = event.touches && event.touches[0];
+    const clientX = isTouchEvent ? event.touches[0].clientX : event.clientX;
+    const clientY = isTouchEvent ? event.touches[0].clientY : event.clientY;
+
+    // Calculate the angle based on position around the center of the color wheel
+    const rect = colorWheel.getBoundingClientRect();
+    const centerX = rect.left + rect.width / 2;
+    const centerY = rect.top + rect.height / 2;
+    const dx = clientX - centerX;
+    const dy = clientY - centerY;
+    
+    // Calculate angle in degrees and adjust for starting position on color wheel
+    let angle = Math.atan2(dy, dx) * (180 / Math.PI) + 90;
+    if (angle < 0) angle += 360;
+
+    // Map angle to hue for color change
+    const hue = angle % 360;
+    screen.style.backgroundColor = `hsl(${hue}, 100%, 50%)`;
+}
+
+// Event listeners for touch and mouse interactions
+
+// Expand color wheel on touchstart or mousedown
+colorWheelContainer.addEventListener("touchstart", (event) => {
+    event.preventDefault(); // Prevents any unintended scrolling or zooming on touch
+    expandColorWheel();
+});
+colorWheelContainer.addEventListener("mousedown", expandColorWheel);
+
+// Update color on touchmove or mousemove
+colorWheel.addEventListener("touchmove", updateColor);
+colorWheel.addEventListener("mousemove", updateColor);
+
+// Shrink color wheel on touchend or mouseup
+colorWheelContainer.addEventListener("touchend", shrinkColorWheel);
+colorWheelContainer.addEventListener("mouseup", shrinkColorWheel);
