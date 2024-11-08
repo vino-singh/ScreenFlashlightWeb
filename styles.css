@@ -1,23 +1,21 @@
-body, html {
-    margin: 0;
-    padding: 0;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    font-family: Arial, sans-serif;
-    background-color: #000;
+/* Style for the circular color wheel button */
+.color-wheel {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background-image: conic-gradient(red, yellow, green, cyan, blue, magenta, red);
+    border: 2px solid #ffffff;
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    cursor: pointer;
 }
 
-.screen {
-    width: 100vw;
-    height: 80vh;
-    background-color: white;
-}
-
-#colorButton {
-    padding: 10px 20px;
-    font-size: 16px;
-    margin-top: 20px;
+/* Style for the color slider */
+.color-slider {
+    display: none; /* Start hidden */
+    position: fixed;
+    bottom: 20px;
+    width: 80%;
+    left: 10%;
 }
