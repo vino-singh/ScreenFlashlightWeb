@@ -30,10 +30,13 @@ function updateColor(event) {
 
     const dx = clientX - centerX;
     const dy = clientY - centerY;
-    const angle = Math.atan2(dy, dx) * (180 / Math.PI); // Convert radians to degrees
-    const hue = (angle + 360) % 360; // Convert angle to a hue value (0 - 360)
 
-    // Update the screen color based on the hue
+    // Calculate the angle in degrees, adjusting to match the color wheel
+    let angle = Math.atan2(dy, dx) * (180 / Math.PI) + 90; // Offset by 90 degrees for alignment
+    if (angle < 0) angle += 360; // Normalize to 0-360
+
+    // Update the screen color based on the hue from the calculated angle
+    const hue = angle % 360; // Limit hue to 0-360 degrees
     screen.style.backgroundColor = `hsl(${hue}, 100%, 50%)`;
 }
 
